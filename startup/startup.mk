@@ -18,15 +18,14 @@ __.silent !:= $(.SILENT)	# Preserve user's .SILENT flag
 
 # startup.mk configuration parameters, for each, set it to non-null if you wish
 # to enable the named facility.
-__.HAVE_RCS  !:= 		# yes => RCS  is installed.
+__.HAVE_RCS  !:=    		# yes => RCS  is installed.
 __.HAVE_SCCS !:=    		# yes => SCCS is installed.
 __.DEFAULTS  !:= yes		# yes => define default construction rules.
 __.EXECS     !:= yes            # yes => define how to build executables.
 
 # Grab key definitions from the environment
-# OS is set by default on some Win32 OSes to a long name, so
+# OS is set by default on some Win32 OS's (including XP) to a long name, so
 # we let config.mk provide the default
-#.IMPORT .IGNORE : OS OSRELEASE OSENVIRONMENT TMPDIR SHELL
 .IMPORT .IGNORE : OSRELEASE OSENVIRONMENT TMPDIR SHELL
 
 # Default DMAKE configuration, if not overriden by environment

@@ -3,5 +3,5 @@
 # ** USE "startup/local.mk" for those.
 
    OS            *:= win95
-   OSRELEASE     *:= microsft
-   OSENVIRONMENT *:= vpp40
+   OSRELEASE     *:= borland
+   OSENVIRONMENT *:= bcc50

@@ -2,6 +2,6 @@
 # ** DO NOT PLACE LOCAL DEFINITIONS INTO THIS FILE IT IS AUTO GENERATED
 # ** USE "startup/local.mk" for those.
 
-   OS            *:= win95
+   OS            *:= winnt
    OSRELEASE     *:= microsft
    OSENVIRONMENT *:= vpp40
