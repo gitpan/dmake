@@ -1,19 +1,7 @@
-diff -ruN dmake.orig/makefile.mk dmake/makefile.mk
---- dmake.orig/makefile.mk	2004-10-22 09:05:12.000000000 +0100
-+++ dmake/makefile.mk	2005-03-07 17:24:22.802340600 +0000
-@@ -83,7 +83,7 @@
- 	duplicate :$(<:s,/,:,) $@
- .ELSE
-     $(MKCONFIG) : template.mk
--	$(eq,$(SHELL),$(COMSPEC) +copy cp) $< $@
-+	$(eq,$(SHELL),$(COMSPEC) +copy cp) $< $(eq,$(SHELL),$(COMSPEC) $(@:s,/,\,) $@)
- .ENDIF
- 
- # how to make public.h
 diff -ruN dmake.orig/startup/startup.mk dmake/startup/startup.mk
---- dmake.orig/startup/startup.mk	2000-09-22 16:33:31.000000000 +0100
-+++ dmake/startup/startup.mk	2005-03-07 17:25:31.395212600 +0000
-@@ -18,13 +18,15 @@
+--- dmake.orig/startup/startup.mk	2005-04-09 22:41:14.000000000 +0100
++++ dmake/startup/startup.mk	2005-06-06 17:40:52.643105900 +0100
+@@ -18,7 +18,7 @@
  
  # startup.mk configuration parameters, for each, set it to non-null if you wish
  # to enable the named facility.
@@ -22,16 +10,7 @@ diff -ruN dmake.orig/startup/startup.mk dmake/startup/startup.mk
  __.HAVE_SCCS !:=    		# yes => SCCS is installed.
  __.DEFAULTS  !:= yes		# yes => define default construction rules.
  __.EXECS     !:= yes            # yes => define how to build executables.
- 
- # Grab key definitions from the environment
--.IMPORT .IGNORE : OS OSRELEASE OSENVIRONMENT TMPDIR SHELL
-+# OS is set by default on some Win32 OS's (including XP) to a long name, so
-+# we let config.mk provide the default
-+.IMPORT .IGNORE : OSRELEASE OSENVIRONMENT TMPDIR SHELL
- 
- # Default DMAKE configuration, if not overriden by environment
- .INCLUDE .NOINFER $(!null,$(OS) .IGNORE) : $(INCFILENAME:d)config.mk
-@@ -61,7 +63,7 @@
+@@ -63,7 +63,7 @@
     RMTARGET      *=  $<
  
  # Default recipe that is used to remove intermediate targets.
@@ -40,203 +19,15 @@ diff -ruN dmake.orig/startup/startup.mk dmake/startup/startup.mk
  
  # Check and enable AUGMAKE extensions for SYSV compatibility
  .IF $(AUGMAKE)
-diff -ruN dmake.orig/sysintf.c dmake/sysintf.c
---- dmake.orig/sysintf.c	2004-10-22 09:05:43.000000000 +0100
-+++ dmake/sysintf.c	2005-03-07 17:26:06.691635800 +0000
-@@ -59,6 +59,12 @@
- --      Use cvs log to obtain detailed change logs.
- */
- 
-+#ifdef _MSC_VER
-+#   define WIN32_LEAN_AND_MEAN
-+#   include <windows.h>
-+#   include <winbase.h>
-+#endif
-+
- #include "extern.h"
- #include "sysintf.h"
- 
-@@ -376,6 +382,12 @@
- int   argc;
- char* argv[];
- {
-+#ifdef _MSC_VER
-+   /* MS VC++ doesn't set argv[0] to the full path, so do it now. */
-+   static char szModuleName[_MAX_PATH];
-+   GetModuleFileName(NULL, szModuleName, sizeof(szModuleName));
-+   argv[0] = szModuleName;
-+#endif
-    Pname = (argc == 0) ? DEF_MAKE_PNAME : argv[0];
-    Root = Def_cell( ".ROOT" );
-    Targets = Def_cell( ".TARGETS" );
 diff -ruN dmake.orig/win95/microsft/config.h dmake/win95/microsft/config.h
---- dmake.orig/win95/microsft/config.h	2004-10-22 09:11:51.000000000 +0100
-+++ dmake/win95/microsft/config.h	2005-03-07 17:27:17.800100600 +0000
+--- dmake.orig/win95/microsft/config.h	2005-04-22 05:22:30.000000000 +0100
++++ dmake/win95/microsft/config.h	2005-06-06 17:41:43.814325900 +0100
 @@ -38,7 +38,7 @@
  
  /* Name and version number of this package */
  #define PACKAGE "dmake"
--#define VERSION "4.3"
-+#define VERSION "4.3-20050307-SHAY"
+-#define VERSION "4.4-cvs"
++#define VERSION "4.4-20050606-SHAY"
+ #define BUILDINFO "Windows / MS Visual C++"
  
  #if defined (_MSC_VER)
- # if _MSC_VER < 500
-@@ -79,8 +79,10 @@
- #   define SIGQUIT SIGTERM
- #endif
- 
--/* MSC doesn't seem to care about CONST */
--#define CONST
-+/* MSC didn't seem to care about CONST in the past */
-+#ifndef CONST
-+#   define CONST
-+#endif
- 
- /* MSC has sys/types.h and sys/stat.h (this is tested only with MSVC++ 6.0) */
- #define HAVE_SYS_TYPES_H 1
-diff -ruN dmake.orig/win95/microsft/config.mk dmake/win95/microsft/config.mk
---- dmake.orig/win95/microsft/config.mk	2000-09-22 16:33:36.000000000 +0100
-+++ dmake/win95/microsft/config.mk	2005-03-07 17:27:53.518393400 +0000
-@@ -14,7 +14,7 @@
- # Definition of macros for library, and C startup code.
- 
- # The following sources are required for MSC
--OSR_SRC += tempnam.c ruletab.c
-+OSR_SRC += ruletab.c
- DOS_SRC += runargv.c rmprq.c
- 
- .SETDIR=$(osrdir) : $(OSR_SRC)
-@@ -27,13 +27,14 @@
- ASFLAGS   += -t -mx $(S_$(MODEL))
- 
- # Microsoft C doesn't need tail but needs head
-+LDOBJS         != $(CSTARTUP) $(OBJDIR)/{$(<:f)}
- LDTAIL         !=
- LDHEAD         != $(LDFLAGS)
- LDARGS	       != $(LDHEAD) -out:$(TARGET) @$(LDTMPOBJ) $(LDTAIL)
- LDTAIL	       != $(_libs)
- _libs          != $(!null,$(LDLIBS) ,@$(LDTMPLIB))
--LDTMPOBJ       != $(mktmp,,$(DIVFILE) $(LDOBJS:s,/,\\,:t"\n")\n)
--LDTMPLIB       != $(mktmp,,$(DIVFILE) $(LDLIBS:s,/,\\,:t"\n")\n)
-+LDTMPOBJ       != $(mktmp,,$(DIVFILE) $(LDOBJS:s,/,\,:t"\n"))
-+LDTMPLIB       != $(mktmp,,$(DIVFILE) $(LDLIBS:s,/,\,:t"\n"))
- 
- # Debugging libraries and flags
- DB_LDFLAGS += /nologo /co /li /map
-diff -ruN dmake.orig/win95/microsft/ruletab.c dmake/win95/microsft/ruletab.c
---- dmake.orig/win95/microsft/ruletab.c	2003-03-25 14:02:53.000000000 +0000
-+++ dmake/win95/microsft/ruletab.c	2005-03-07 17:28:21.564909400 +0000
-@@ -32,10 +32,10 @@
- #include <stdio.h>
- 
- static char *_rules[] = {
--	"MAXLINELENGTH := 2046",
--	"MAXPROCESSLIMIT := 4",
-+	"MAXLINELENGTH := 20460",
-+	"MAXPROCESSLIMIT := 16",
- 	"MAXPROCESS := 1",
--	".IMPORT .IGNORE: DMAKEROOT SOLARVER UPD INPATH OS UPDMINOREXT",
-+	".IMPORT .IGNORE: DMAKEROOT SOLARVER UPD INPATH UPDMINOREXT",
- 	".MAKEFILES : makefile.mk makefile",
- 	".SOURCE    : .NULL",
- #include "startup.h"
-diff -ruN dmake.orig/win95/microsft/sysintf.h dmake/win95/microsft/sysintf.h
---- dmake.orig/win95/microsft/sysintf.h	2000-09-22 16:33:37.000000000 +0100
-+++ dmake/win95/microsft/sysintf.h	2005-03-07 17:28:44.658363800 +0000
-@@ -50,7 +50,7 @@
- #ifdef _POSIX_NAME_MAX
- #undef  _POSIX_NAME_MAX
- #endif
--#define _POSIX_NAME_MAX 12
-+#define _POSIX_NAME_MAX _MAX_FNAME
- 
- #ifdef _POSIX_PATH_MAX
- #undef _POSIX_PATH_MAX
-diff -ruN dmake.orig/win95/microsft/vpp40/mk.bat dmake/win95/microsft/vpp40/mk.bat
---- dmake.orig/win95/microsft/vpp40/mk.bat	2003-12-17 16:17:27.000000000 +0000
-+++ dmake/win95/microsft/vpp40/mk.bat	2005-03-07 17:30:18.829033400 +0000
-@@ -1,41 +1,38 @@
--if "%1" != "" goto link 
--del /FY objects
--del config.h
--del dmake.exe
-+if exist objects rd /S /Q objects
-+if exist config.h del config.h
-+if exist dmake.exe del dmake.exe
- md objects
--cl -c %c_flg -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\infer.obj infer.c
--cl -c %c_flg -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\make.obj make.c
--cl -c %c_flg -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\stat.obj stat.c
--cl -c %c_flg -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\expand.obj expand.c
--cl -c %c_flg -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\dmstring.obj dmstring.c
--cl -c %c_flg -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\hash.obj hash.c
--cl -c %c_flg -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\dag.obj dag.c
--cl -c %c_flg -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\dmake.obj dmake.c
--cl -c %c_flg -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\path.obj path.c
--cl -c %c_flg -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\imacs.obj imacs.c
--cl -c %c_flg -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\sysintf.obj sysintf.c
--cl -c %c_flg -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\parse.obj parse.c
--cl -c %c_flg -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\getinp.obj getinp.c
--cl -c %c_flg -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\quit.obj quit.c
--cl -c %c_flg -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\state.obj state.c
--cl -c %c_flg -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\dmdump.obj dmdump.c
--cl -c %c_flg -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\macparse.obj macparse.c
--cl -c %c_flg -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\rulparse.obj rulparse.c
--cl -c %c_flg -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\percent.obj percent.c
--cl -c %c_flg -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\function.obj function.c
--cl -c %c_flg -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\dchdir.obj win95\dchdir.c
--cl -c %c_flg -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\switchar.obj win95\switchar.c
--cl -c %c_flg -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\dstrlwr.obj msdos\dstrlwr.c
--cl -c %c_flg -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\arlib.obj msdos\arlib.c
--cl -c %c_flg -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\dirbrk.obj msdos\dirbrk.c
-+cl -c -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\infer.obj infer.c
-+cl -c -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\make.obj make.c
-+cl -c -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\stat.obj stat.c
-+cl -c -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\expand.obj expand.c
-+cl -c -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\dmstring.obj dmstring.c
-+cl -c -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\hash.obj hash.c
-+cl -c -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\dag.obj dag.c
-+cl -c -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\dmake.obj dmake.c
-+cl -c -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\path.obj path.c
-+cl -c -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\imacs.obj imacs.c
-+cl -c -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\sysintf.obj sysintf.c
-+cl -c -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\parse.obj parse.c
-+cl -c -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\getinp.obj getinp.c
-+cl -c -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\quit.obj quit.c
-+cl -c -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\state.obj state.c
-+cl -c -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\dmdump.obj dmdump.c
-+cl -c -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\macparse.obj macparse.c
-+cl -c -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\rulparse.obj rulparse.c
-+cl -c -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\percent.obj percent.c
-+cl -c -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\function.obj function.c
-+cl -c -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\dchdir.obj win95\dchdir.c
-+cl -c -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\switchar.obj win95\switchar.c
-+cl -c -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\dstrlwr.obj msdos\dstrlwr.c
-+cl -c -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\arlib.obj msdos\arlib.c
-+cl -c -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\dirbrk.obj msdos\dirbrk.c
- rem Not needed for MSVC 6 and up. Lesser versions not supported
--rem cl -c %c_flg -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\tempnam.obj tempnam.c
--cl -c %c_flg -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\ruletab.obj win95\microsft\ruletab.c
--cl -c %c_flg -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\runargv.obj msdos\runargv.c
--cl -c %c_flg -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\rmprq.obj msdos\rmprq.c
-+rem cl -c -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\tempnam.obj tempnam.c
-+cl -c -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\ruletab.obj win95\microsft\ruletab.c
-+cl -c -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\runargv.obj msdos\runargv.c
-+cl -c -I. -Iwin95 -Iwin95\microsft -Iwin95\microsft\vpp40 /nologo -Od -GF -Ge -Foobjects\rmprq.obj msdos\rmprq.c
- 
- :link
--rem link /nologo /out:dmake.exe @fix95nt\win95\microsft\vpp40\obj.rsp
--if "%c_flg" == "" link /out:dmake.exe @.\win95\microsft\vpp40\obj.rsp
--if "%c_flg" != "" link /DEBUG:notmapped,full /DEBUGTYPE:cv /PDB:NONE /out:dmake.exe @.\win95\microsft\vpp40\obj.rsp
-+link /nologo /out:dmake.exe @.\win95\microsft\vpp40\obj.rsp
- copy win95\microsft\vpp40\template.mk startup\config.mk
-diff -ruN dmake.orig/win95/startup.h dmake/win95/startup.h
---- dmake.orig/win95/startup.h	2000-09-22 16:33:36.000000000 +0100
-+++ dmake/win95/startup.h	2005-03-07 17:30:49.060819200 +0000
-@@ -24,5 +24,5 @@
- --      Use cvs log to obtain detailed change logs.
- */
- 
--/*"MAKESTARTUP := $(MAKECMD:d)startup/startup.mk",*/
-+"DMAKEROOT *= $(MAKECMD:d)startup",
- "MAKESTARTUP := $(DMAKEROOT)\\startup.mk",

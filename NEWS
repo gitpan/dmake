@@ -1,0 +1,131 @@
+News file for the dmake version that is hosted on the OpenOffice.org
+cvs. #i<number># denote issues tracked by the OpenOffice.org issue tracking
+system, see <http://qa.openoffice.org/issue_handling/project_issues.html>.
+
+Version 4.4-cvs <unreleased>
+============================
+
+2005/06/01 Volker Quetschke (vq@openoffice.org)
+#i39248# Add a testsuite to test some dmake features (only for autotools
+ builds). Start the tests with "make check".
+
+2005/04/21 Volker Quetschke (vq@openoffice.org)
+#i47851# Increase the version number to 4.4-cvs and slightly rearrange the
+output of "dmake -V".
+Remove the hardcoded (in autotools builds) OS macro. It had the wrong value
+to be usable with the startup/*.mk and is not mentioned in the man page.
+Clean up configure.in and friends.
+
+2005/04/20 Volker Quetschke (vq@openoffice.org)
+#i43310# Fix percent (%) rules to recognize prerequisites that are defined
+with the multiple target rule operator (::). 
+This implicitly fixes the similar problem for .<suffix>.<suffix> targets.
+
+2005/04/16 Volker Quetschke (vq@openoffice.org)
+#i46987# Fix the documentation of the $(mktmp ...) function macro. This is
+not necessarily a new feature as the macro works this way since dmake was
+imported into the OpenOffice.org cvs but mentioning it here might help users
+of dmake upgrading from very old versions.
+
+Add the "map escape codes" $(...:m) macro expansion that allows to expand
+escape codes in macros.  It can also be used to reproduce the former (pre
+OpenOffice.org cvs) $(mktmp ...) behavior.
+
+2005/04/10 Volker Quetschke (vq@openoffice.org)
+#i43252# Introduce the macro ABSMAKECMD that's value for a native Windows
+dmake executable (compiled with MS Visual C++ or MinGW) is the absolute
+filename and NULL for other operating systems or dmake build with other
+compilers.
+If DMAKEROOT is not changed and only for native Windows dmake versions the
+value of DMAKEROOT now defaults to "$(ABSMAKECMD:d)startup".
+This allows to use the startup files from the startup directory from the
+same location where the dmake.exe is located.
+
+2005/04/08 Steve Hay (shay@openoffice.org)
+#i43241# Fix build problems with VC++ (in non-OOo environment) and fix
+the dmake makefiles so that dmake can rebuild itself (VC++ only).
+
+2005/03/14 Volker Quetschke (vq@openoffice.org)
+#i44959# Fix problems when a continued line is followed by an empty
+or comment line.
+
+2005/03/13 Volker Quetschke (vq@openoffice.org)
+#i37053# Fix function macro problems with continued lines.
+
+2004/11/23 Volker Quetschke (vq@openoffice.org)
+#i37491# Predefine dmake macro containing one space (SPACECHAR).
+
+2004/11/21 Volker Quetschke (vq@openoffice.org)
+#i36027# Improve function macro parameter parsing.
+
+Version 4.3
+===========
+
+2004/10/07 Volker Quetschke (vq@openoffice.org)
+#i34746# Fix timestamp of phony targets with prerequisites.
+
+2004/07/11 Volker Quetschke (vq@openoffice.org)
+#i31255# Add verbose recipe echoing option (-vr).
+
+2004/07/06 Volker Quetschke (vq@openoffice.org)
+#i30779# Fix to allow dmake to echo recipe lines when inference is used
+to create files that are to be read by .INCLUDE.
+
+2004/04/01 Michael Meeks (mmeeks@openoffice.org)
+#i27319#, #i27981# Don't handle environment variables that begin with a
+'!', they are used by Cygwin internally and confuse dmake.
+
+2004/01/09 Dan Williams (fa@openoffice.org)
+#i17992# Allows the nesting of expressions and a much more complex syntax
+for dmake. It is now possible to nest expressions with () and any
+combination of || and &&.
+Example:
+.IF (("$(OS)"=="MACOSX"&&"$(COM)"=="GCC")||"$(OS)"=="LINUX") && "$(GUIBASE)"=="unx"
+...
+.ENDIF
+
+2003/10/19 Ken Foskey (waratah@openoffice.org)
+#i20504# Correct processing of .LIBRARY targets.
+
+2003/10/08 Chris Halls (haggai@openoffice.org)
+#i7800# Fix tempnam security problem.
+
+2003/03/08 Volker Quetschke (vq@openoffice.org)
+#i10910# Use the build-in tempnam function for MS VC6.
+
+2003/03/05 Volker Quetschke (vq@openoffice.org)
+#i11861# Switch to newer autotools autoconf 2.5x and automake 1.5 and
+add MinGW and MSVC to the configure buildable targets.
+
+2002/10/11 Ken Foskey (waratah@openoffice.org)
+Fix the "lost a child" problem. (Part II)
+
+2002/10/04 Ken Foskey (waratah@openoffice.org)
+Reworke the configure process.
+
+2002/04/10 Hans-Joachim Lankenau (hjs@openoffice.org)
+Don't search INCLUDEDIRS if the filename to be included starts at fs-root.
+
+2001/05/29 Patrick Luby (pluby@openoffice.org)
+Added forceful exit to avoid infinite loop that sometimes occurs when
+there is a fatal error. Lost a child problem. (Part I)
+
+Version 4.2
+===========
+(Note, the dmake -V output was not changed and still said
+"Version 4.10, PL 0". This propably should have been 4.1)
+
+2001/04/20 Martin Hollmichel (mh@openoffice.org)
+First autoconfiscation of dmake.
+
+2001/02/13 Hans-Joachim Lankenau (hjs@openoffice.org)
+Fix for leaving tmpfiles when building group targets.
+
+2000/09/22 Jens-Heiner Rechtien (hr@openoffice.org)
+Initial import of dmake into OpenOffice.org cvs
+
+before 2000/09/22 ?
+Add smaller/greater arithmetic for .IF conditions.
+
+1999/03/18 Hans-Joachim Lankenau (hjs@openoffice.org)
+Implement boolean expression "or".

@@ -24,9 +24,9 @@ __.DEFAULTS  !:= yes		# yes => define default construction rules.
 __.EXECS     !:= yes            # yes => define how to build executables.
 
 # Grab key definitions from the environment
-# OS is set by default on some Win32 OS's (including XP) to a long name, so
-# we let config.mk provide the default
-.IMPORT .IGNORE : OSRELEASE OSENVIRONMENT TMPDIR SHELL
+# The variables OS OSRELEASE OSENVIRONMENT were removed from this
+# list because of windows. See issue 43254 for details. 
+.IMPORT .IGNORE : TMPDIR SHELL
 
 # Default DMAKE configuration, if not overriden by environment
 .INCLUDE .NOINFER $(!null,$(OS) .IGNORE) : $(INCFILENAME:d)config.mk

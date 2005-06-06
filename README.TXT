@@ -1,4 +1,4 @@
-This is DMAKE version 4.3 compiled for Win32 using MS VC++ 6.
+This is DMAKE version 4.4 compiled for Win32 using MS VC++ 6.
 
 For information on how to use DMAKE, see man\dmake.nc.
 
@@ -13,12 +13,6 @@ change the defaults, you'll need to make sure the subdirectories you name in
 startup\config.mk are populated with setup files (you can use the current
 hierarchy as a model).
 
-The default startup configuration can also be overridden by setting "OSRELEASE"
-and "OSENVIRONMENT" in your environment (see the notes under "readme").  Note
-that the startup files don't read the "OS" environment variable, despite what
-the notes in the "readme" directory say.  In other words, you can only set "OS"
-from the startup\config.mk file.
-
 The original sources of DMAKE were available from:
 
     http://dmake.wticorp.com
@@ -28,26 +22,26 @@ in the OpenOffice.org "tools" project, the home page for which is:
 
     http://tools.openoffice.org/
 
-You can get the latest sources from:
+You can get the latest "stable" sources from:
 
     cvs -d :pserver:anoncvs@anoncvs.services.openoffice.org:/cvs co dmake
 
-This version of DMAKE is compiled from sources taken from the above cvs address
-on 07 Mar 2005.  The file PATCH.TXT contains the changes I had to make to get it
-to build, plus a couple of other changes inspired by the changes made by
-Gurusamy Sarathy in his DMAKE 4.1 build which is available from:
+This version of DMAKE is compiled from sources taken from the
+cws_src680_dmake43p01 branch of the above cvs address on 06 Jun 2005 at 09:00 AM
+(BST).  You can get the same sources with the cvs command:
+
+    cvs -d :pserver:anoncvs@anoncvs.services.openoffice.org:/cvs co
+        -r cws_src680_dmake43p01 -D "2005-06-06 09:00 BST" dmake
+
+The file PATCH.TXT contains the changes that I made to those sources, namely, a
+change to the version string displayed by "dmake -V", plus a couple of other
+changes inspired by the changes made by Gurusamy Sarathy in his DMAKE 4.1 build
+which is available from:
 
     ftp://ftp.linux.activestate.com/pub/staff/gsar/
-
-Some of these changes have been submitted to the OpenOffice.org Issue Tracker
-and can be viewed, with explanations, at:
-
-    http://www.openoffice.org/issues/show_bug.cgi?id=43241
-    http://www.openoffice.org/issues/show_bug.cgi?id=43252
-    http://www.openoffice.org/issues/show_bug.cgi?id=43254
 
 Enjoy!
 
 Steve Hay
 shay@cpan.org
-07-Mar-2005
+06-Jun-2005
