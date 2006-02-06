@@ -1,3 +1,372 @@
+2006-02-04 23:02  vq
+
+	* man/dmake.nc:
+
+	#i61170# Regenerate plain text version of the dmake man page.
+
+2006-02-03 14:46  vq
+
+	* NEWS, make.c, makefile.mk, man/dmake.tf:
+
+	#i61170# Let $(TMD)/somedir always be a valid path.
+	Adjust the dmake bootstrap makefile to this change.
+
+2006-02-01 23:50  vq
+
+	* dmake.c:
+
+	#i47919# Fix typo.
+
+2006-02-01 23:39  vq
+
+	* dmake.c, quit.c, sysintf.c, mac/public.h,
+	  msdos/borland/bcc30/public.h, msdos/borland/bcc40/public.h,
+	  msdos/borland/bcc45/public.h, msdos/borland/bcc50/public.h,
+	  msdos/borland/tcc20/public.h, msdos/microsft/msc51/public.h,
+	  msdos/microsft/msc60/public.h, msdos/zortech/public.h,
+	  os2/ibm/icc/public.h, os2/ibm/icc3/public.h, qssl/public.h,
+	  tos/public.h, unix/386ix/public.h, unix/bsd43/public.h,
+	  unix/bsd43/uw/public.h, unix/bsd43/vf/public.h,
+	  unix/bsdarm32/public.h, unix/coherent/ver40/public.h,
+	  unix/coherent/ver42/public.h, unix/cygwin/public.h,
+	  unix/linux/gnu/public.h, unix/macosx/gnu/public.h,
+	  unix/solaris/public.h, unix/solaris/gnu/public.h,
+	  unix/sysvr1/public.h, unix/sysvr3/public.h,
+	  unix/sysvr3/gnu/public.h, unix/sysvr3/pwd/public.h,
+	  unix/sysvr4/public.h, unix/xenix/public.h,
+	  unix/xenix/pwd/public.h, win95/borland/bcc50/public.h,
+	  win95/microsft/vpp40/public.h, winnt/borland/bcc50/public.h,
+	  winnt/microsft/vpp40/public.h, winnt/mingw/public.h,
+	  winnt/msvc6/public.h:
+
+	#i47919# Use the correct handler function for the signal() handling.
+
+2006-02-01 18:37  vq
+
+	* man/dmake.nc:
+
+	#i60948# Regenerate plain text version of the dmake man page.
+
+2006-02-01 18:28  vq
+
+	* Makefile.in, NEWS, config.h.in, configure, configure.in, dmake.c,
+	  dmake.h, function.c, make.c, sysintf.c, vextern.h, mac/public.h,
+	  man/dmake.tf, msdos/runargv.c, msdos/borland/bcc30/public.h,
+	  msdos/borland/bcc40/public.h, msdos/borland/bcc45/public.h,
+	  msdos/borland/bcc50/public.h, msdos/borland/tcc20/public.h,
+	  msdos/microsft/msc51/public.h, msdos/microsft/msc60/public.h,
+	  msdos/zortech/public.h, os2/ibm/icc/public.h,
+	  os2/ibm/icc3/public.h, qssl/public.h, tos/public.h,
+	  unix/runargv.c, unix/386ix/public.h, unix/bsd43/public.h,
+	  unix/bsd43/uw/public.h, unix/bsd43/vf/public.h,
+	  unix/bsdarm32/public.h, unix/coherent/ver40/public.h,
+	  unix/coherent/ver42/public.h, unix/cygwin/public.h,
+	  unix/linux/gnu/public.h, unix/macosx/gnu/public.h,
+	  unix/solaris/public.h, unix/solaris/gnu/public.h,
+	  unix/sysvr1/public.h, unix/sysvr3/public.h,
+	  unix/sysvr3/gnu/public.h, unix/sysvr3/pwd/public.h,
+	  unix/sysvr4/public.h, unix/xenix/public.h,
+	  unix/xenix/pwd/public.h, win95/borland/bcc50/public.h,
+	  win95/microsft/vpp40/public.h, winnt/borland/bcc50/public.h,
+	  winnt/microsft/vpp40/public.h, winnt/mingw/public.h,
+	  winnt/msvc6/public.h:
+
+	#i60948# Add -m option family to generate timing information for targets
+	and/or recipes. (Autotools files were regenerated.)
+
+2006-02-01 17:08  vq
+
+	* tos/public.h, unix/arlib.c, unix/386ix/public.h,
+	  unix/bsd43/public.h, unix/bsd43/uw/public.h,
+	  unix/bsd43/vf/public.h, unix/bsdarm32/public.h,
+	  unix/coherent/ver40/public.h, unix/coherent/ver42/public.h,
+	  unix/cygwin/public.h, unix/linux/gnu/public.h,
+	  unix/macosx/gnu/public.h, unix/solaris/public.h,
+	  unix/solaris/gnu/public.h, unix/sysvr1/public.h,
+	  unix/sysvr3/public.h, unix/sysvr3/gnu/public.h,
+	  unix/sysvr3/pwd/public.h, unix/sysvr4/public.h,
+	  unix/xenix/public.h, unix/xenix/pwd/public.h:
+
+	#i61390# Add missing prototypes.
+
+2006-01-31 23:18  vq
+
+	* man/dmake.tf:
+
+	#i10000# Small documentation fix.
+
+2006-01-30 15:28  vq
+
+	* quit.c, unix/cygwin/public.h:
+
+	#i61390# Add some missing prototypes to dmake/unix/cygwin/public.h and
+	also revert the copyright disclaimer to the original version. This file
+	is supposed to be auto generated and identical to:
+	dmake/unix/linux/gnu/cygwin/public.h.
+
+2006-01-26 20:22  vq
+
+	* tests/: Makefile.am, Makefile.in, macros-2:
+
+	#i61170# Add testcase and regenerate autotools files.
+
+2006-01-26 20:16  vq
+
+	* make.c:
+
+	#i61170# Add micro optimization as usually PWD is equal to MAKEDIR.
+
+2006-01-25 21:54  vq
+
+	* Makefile.in, config.h.in, configure, configure.in, make.c:
+
+	#i61170# Fix TMD macro and regenerate autotool files.
+
+2006-01-25 21:09  vq
+
+	* configure.in:
+
+	#i53148# Treat MinGW build like MSVC build.
+
+2006-01-11 12:46  rene
+
+	* config.guess, config.sub:
+
+	#i60375# update config.{sub,guess}
+
+2006-01-08 17:20  vq
+
+	* Makefile.in, configure, configure.in:
+
+	#i60168# Expand internal configure variable before using it and
+	regenerate autotool files.
+
+2006-01-08 16:44  vq
+
+	* Makefile.in, configure:
+
+	#i60168# Regenerate autotool files.
+
+2006-01-08 16:37  vq
+
+	* configure.in:
+
+	#i60168# Use the --datadir swich to determine where the startup dir is
+	placed and adapt the default DMAKEROOT macro setting accordingly.
+
+2006-01-05 20:35  vq
+
+	* tests/Makefile.in:
+
+	#i58259# Regenerate autotool files.
+
+2006-01-05 20:24  vq
+
+	* tests/: misc-6, Makefile.am:
+
+	#i58259# Add testcase.
+
+2006-01-03 23:07  vq
+
+	* make.c:
+
+	#i58259# Fix thinko and solve the problems with all testcases from the
+	issue.
+
+2006-01-03 21:13  vq
+
+	* make.c, dmake.h:
+
+	#i58259# Partial fix. This fixes the use of dp after it was freed.
+
+2005-12-15 15:04  vq
+
+	* sysintf.c:
+
+	#i58391# Create better temporary filenames when .NET2003 or newer are used.
+
+2005-10-25 13:19  vq
+
+	* Makefile.in, config.h.in, configure, configure.in, function.c:
+
+	#i53148# Restore old behaviour for non-*NIX dmake versions.
+
+2005-10-11 14:01  vq
+
+	* Makefile.in, tests/Makefile.am, tests/Makefile.in, tests/README,
+	  tests/misc-4:
+
+	#i39248# Add testcase and regenerate configure and other autotools files.
+
+2005-10-11 13:48  vq
+
+	* tests/misc-5:
+
+	#i54938# Add testcase for .INCLUDE generation in parallel builds.
+
+2005-10-11 13:39  vq
+
+	* function.c, getinp.c, make.c, vextern.h, unix/runargv.c:
+
+	#i54938# Fix problem when building infered .INCLUDE makefiles and doing
+	parallel builds.
+
+2005-10-04 00:33  vq
+
+	* man/: dmake.nc, dmake.tf:
+
+	#i10000# Fix markup error in man page source and regenerate the ascii version.
+
+2005-09-25 20:43  vq
+
+	* dbug/dbug/: dbug.txt, example1.c, example2.c, example3.c,
+	  factorial.c, main.c, makeman.sh, readme, user.r:
+
+	#i55070# Restore the documentation for Fred Fish's "C Program Debugging
+	Package" DBUG.
+
+2005-09-25 20:33  vq
+
+	* Makefile.am, Makefile.in, configure, configure.in, extern.h,
+	  dbug/dbug/dbug.c, msdos/Makefile.in, startup/Makefile.in,
+	  startup/unix/Makefile.in, startup/unix/cygwin/Makefile.in,
+	  startup/unix/linux/Makefile.in, startup/unix/macosx/Makefile.in,
+	  startup/unix/solaris/Makefile.in,
+	  startup/unix/sysvr4/Makefile.in, startup/winnt/Makefile.in,
+	  startup/winnt/mingw/Makefile.in, startup/winnt/msvc6/Makefile.in,
+	  tests/Makefile.in, unix/Makefile.in, win95/Makefile.in,
+	  win95/microsft/Makefile.in:
+
+	#i55070# Fix Fred Fishes DBUG macros and add --enable-dbug to enable them
+	in a configure type build. Also regenerate autotool files.
+
+2005-09-21 21:46  vq
+
+	* tempnam.c:
+
+	#i52899# Remove unused file.
+
+2005-09-19 20:50  vq
+
+	* Makefile.in, aclocal.m4, configure, msdos/Makefile.in,
+	  startup/Makefile.in, startup/unix/Makefile.in,
+	  startup/unix/cygwin/Makefile.in, startup/unix/linux/Makefile.in,
+	  startup/unix/macosx/Makefile.in,
+	  startup/unix/solaris/Makefile.in,
+	  startup/unix/sysvr4/Makefile.in, startup/winnt/Makefile.in,
+	  startup/winnt/mingw/Makefile.in, startup/winnt/msvc6/Makefile.in,
+	  tests/Makefile.am, tests/Makefile.in, tests/misc-3,
+	  unix/Makefile.in, win95/Makefile.in, win95/microsft/Makefile.in:
+
+	#i49461# Add testcase and regenerate configure and other autotools files.
+
+2005-09-19 20:01  vq
+
+	* NEWS, man/dmake.nc, man/dmake.tf:
+
+	#i53148# Update NEWS file and man page.
+
+2005-09-19 19:48  vq
+
+	* unix/runargv.c:
+
+	#i53148# Move include directive to get some macros defined before using
+	them.
+
+2005-09-17 19:25  vq
+
+	* unix/runargv.c:
+
+	#i53148# Make sure that the command started from _exec_shell really
+	finished before returning.
+
+2005-09-17 15:47  vq
+
+	* Makefile.in:
+
+	RESYNC: (1.11-1.12); FILE MERGED
+
+2005-09-17 15:47  vq
+
+	* Makefile.am:
+
+	RESYNC: (1.8-1.9); FILE MERGED
+
+2005-09-08 14:00  rt
+
+	* unix/cygwin/public.h:
+
+	INTEGRATION: CWS ooo19126 (1.4.34); FILE MERGED
+	2005/09/05 17:12:52 rt 1.4.34.1: #i54170# Change license header: remove SISSL
+
+2005-09-06 21:39  vq
+
+	* unix/runargv.c:
+
+	#i53148# Make sure _attach_cmd can not be used for _exec_shell calls.
+
+2005-09-05 17:10  vq
+
+	* tests/: Makefile.am, function_macros-3, function_macros-4:
+
+	#i53148# Add another testcase.
+
+2005-09-05 16:56  vq
+
+	* dmake.c, function.c, vextern.h, unix/runargv.c:
+
+	#i53148# Move redirection of stdout from parent to child and avoid
+	capturing spurious output from other process queues.
+
+2005-09-05 13:23  vq
+
+	* dmake.c, function.c, vextern.h, unix/runargv.c:
+
+	#i53148# Additional patch to make sure that the shell escapes is executed
+	after all previous recipe lines from the same target have finished.
+
+2005-09-04 23:17  vq
+
+	* tests/: Makefile.am, function_macros-3, misc-2:
+
+	#i53148# Add testcase.
+
+2005-09-04 15:38  vq
+
+	* dmake.c, function.c, sysintf.c, vextern.h, unix/runargv.c:
+
+	#i53148# Fix $(shell ...) handling for parallel builds with MAXPROCESS > 1.
+	This certainly includes the -P# switch with # > 1.
+
+2005-09-01 20:25  vq
+
+	* Makefile.in, aclocal.m4, autogen.sh, msdos/Makefile.in,
+	  startup/Makefile.in, startup/unix/Makefile.in,
+	  startup/unix/cygwin/Makefile.in, startup/unix/linux/Makefile.in,
+	  startup/unix/macosx/Makefile.in,
+	  startup/unix/solaris/Makefile.in,
+	  startup/unix/sysvr4/Makefile.in, startup/winnt/Makefile.in,
+	  startup/winnt/mingw/Makefile.in, startup/winnt/msvc6/Makefile.in,
+	  tests/Makefile.in, unix/Makefile.in, win95/Makefile.in,
+	  win95/microsft/Makefile.in:
+
+	#i52238# Regenerate configure and other autotools files.
+
+2005-09-01 19:27  vq
+
+	* tests/: Makefile.am, misc-2:
+
+	#i52238# Add a testcase.
+
+2005-06-04 14:07  vq
+
+	* Makefile.in, startup/Makefile.am, startup/Makefile.in,
+	  startup/unix/Makefile.am, startup/unix/Makefile.in,
+	  startup/winnt/Makefile.am, startup/winnt/Makefile.in,
+	  tests/Makefile.am, tests/Makefile.in, tests/misc-1:
+
+	#i39248# Add another testcase.
+
 2005-06-01 23:58  vq
 
 	* NEWS:

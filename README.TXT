@@ -22,16 +22,20 @@ in the OpenOffice.org "tools" project, the home page for which is:
 
     http://tools.openoffice.org/
 
+and details on the OpenOffice.org version of DMAKE can be found at:
+
+    http://tools.openoffice.org/dmake/
+
 You can get the latest "stable" sources from:
 
     cvs -d :pserver:anoncvs@anoncvs.services.openoffice.org:/cvs co dmake
 
 This version of DMAKE is compiled from sources taken from the
-cws_src680_dmake43p01 branch of the above cvs address on 06 Jun 2005 at 09:00 AM
-(BST).  You can get the same sources with the cvs command:
+cws_src680_dmake43p01 branch of the above cvs address on 06 Feb 2006 at 08:00 AM
+(GMT).  You can get the same sources with the cvs command:
 
     cvs -d :pserver:anoncvs@anoncvs.services.openoffice.org:/cvs co
-        -r cws_src680_dmake43p01 -D "2005-06-06 09:00 BST" dmake
+        -r cws_src680_dmake43p01 -D "2005-02-06 08:00 GMT" dmake
 
 The file PATCH.TXT contains the changes that I made to those sources, namely, a
 change to the version string displayed by "dmake -V", plus a couple of other
@@ -44,4 +48,4 @@ Enjoy!
 
 Steve Hay
 shay@cpan.org
-06-Jun-2005
+06-Feb-2006

@@ -19,14 +19,16 @@
 .IP "\\$1" \\n[dmake-indent]u
 .it 1 PD
 ..
-.TH DMAKE 1  "UW" "Version 4.3"
+.TH DMAKE 1  "UW" "Version 4.4"
 .SH NAME
 \fBdmake\fR \- maintain program groups, or interdependent files
 .SH SYNOPSIS
+.nh
 .B dmake
 [\-P#] [\-{f|C|K} file] [\-{w|W} target ...]
 [macro[[!][*][+][:]]=\fIvalue\fP ...]
-[\-v{cdfimrtw}] [\-ABcdeEghiknpqrsStTuVxX] [target ...]
+[\-ABcdeEghiknpqrsStTuVxX] [\-v[cdfimrtw]] [\-m[trae]] [target ...]
+.hy 14
 .SH DESCRIPTION
 .PP
 .B dmake
@@ -139,6 +141,32 @@ all targets not depending on targets that could not be made.
 Ordinarily \fBdmake\fR stops after a command returns a non-zero status,
 specifying \fB\-k\fR causes \fBdmake\fR to ignore the error
 and continue to make as much as possible.
+.IP "\fB\-m[trae]\fR"
+Measure timing information. Print the time when targets and/or recipes
+are started and finished to stdout. The following format is used:
+.IP ""
+\fB{s|e} {target|recipe} time maketarget\fP
+.IP ""
+\fBs\fP or \fBe\fP stands for started or ended, \fBtarget\fP or
+\fBrecipe\fP denotes if this line refers to the whole target or a
+recipe. \fBtime\fP is displayed in Unix time format, i.e. the number
+of seconds since an epoch.  (Since 1970-01-01T00:00:00Z).  \fBmaketarget\fP
+obviously represents the target the timing information is given for.
+The optional flags \fB[trae]\fP can be used to change the information that
+is displayed.  If no optional flags are given only the \fBt\fP flag
+is assumed to be selected, ie. \fB\-mt\fP.  The optional flags stand for:
+.RS
+.IP "\fBt\fP"
+Display the start and end time of each target.
+.IP "\fBr\fP"
+Display the start and end time of each recipe.
+.IP "\fBa\fP"
+Display the target as an absolute path, i.e. prepend the current working
+directory.
+.IP "\fBe\fP"
+Also display the start and end time of the \fB$(shell command)\fP function
+(aka. shell escape) macros.
+.RE
 .IP "\fB\-n\fR"
 Causes \fBdmake\fR to print out what it would have executed,
 but does not actually execute the commands.  A special check is made for
@@ -181,7 +209,7 @@ Verbose flag, when making targets print to stdout what we are going to make
 and what we think its time stamp is.  The optional flags \fB[cdfimrtw]\fP can be
 used to restrict the information that is displayed.  In the absence of any
 optional flags all are assumed to be given (ie. \fB\-v\fP is equivalent to
-\fB\-vdfimt\fP).  The meanings of the optional flags are:
+\fB\-vcdfimrtw\fP).  The meanings of the optional flags are:
 .RS
 .IP "\fBc\fP"
 Notify of directory cache operations only.
@@ -352,7 +380,7 @@ if the proper rules for doing so are defined in the startup file.
 If the first line of the user makefile is of the form:
 .RS
 .sp
-\#! command command_args
+#!command command_args
 .sp
 .RE
 then \fBdmake\fP will expand and run the command prior to reading any
@@ -1602,7 +1630,10 @@ Temporary files are used for text diversions and for group recipe processing.
 .IP \fBTMD\fP 1.6i
 Stands for "To Make Dir", and
 is the path from the present directory (value of $(PWD)) to the directory
-that \fBdmake\fP was started up in (value of $(MAKEDIR)).
+that \fBdmake\fP was started up in (value of $(MAKEDIR)). If the present
+directory is the directory that \fBdmake\fP was started up in TMD will be
+set to the relative path ".". This allows to create valid paths by prepending
+$(TMD)$(DIRSEPSTR) to a relative path.
 This macro is modified when .SETDIR attributes are processed.
 .IP \fBUSESHELL\fP 1.6i
 The value of this macro is set to "yes" if the current recipe is forced to
@@ -1969,8 +2000,8 @@ expands each \fBmacroterm\fP in turn and returs the empty string if
 each term expands to the empty string; otherwise, it returs the string
 "t".
 .IP "$(\fBshell\fP \fBcommand\fP)"
-Runs \fIcommand\fP as if it were part of a recipe and returns,
-separated by a single space, all the non-white
+is a shell escape macro. It runs \fIcommand\fP as if it were part of a
+recipe and returns, separated by a single space, all the non-white
 space terms written to stdout by the command.
 For example:
 .RS
@@ -1988,10 +2019,14 @@ $(shell +ls *.c)
 .sp
 .RE
 will run the command using the current shell.
+.LP
+\fBNote\fP that if the macro is part of a recipe it will be evaluated after
+all previous recipe lines have been executed. For obvious reasons it will be
+evaluated before the current recipe line or group recipe is executed.
 .RE
 .IP "$(\fBshell,expand\fP \fBcommand\fP)"
-Is an extension to the \fB$(shell...\fP function macro that expands the result
-of running \fBcommand\fP.
+Is an extension to the \fB$(shell command)\fP function macro that expands the
+result of running \fBcommand\fP.
 .IP "$(\fBsort\fP \fBlist\fP)"
 Will take all white\-space separated tokens in \fIlist\fP and will
 return their sorted equivalent list.

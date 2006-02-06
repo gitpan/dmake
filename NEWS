@@ -5,14 +5,32 @@ system, see <http://qa.openoffice.org/issue_handling/project_issues.html>.
 Version 4.4-cvs <unreleased>
 ============================
 
+2006/02/03 Volker Quetschke (vq@openoffice.org)
+#i61170# Fix the TMD macro. Up to now the TMD macro appended a directory
+separator if it ended in "..", but most of the time it was not set correctly
+at all and/or without a trailing slash.
+Note: If your application relies on TMD please check the dmake manual page
+for its definition and fix your makefiles if needed.
+
+2006/02/01 Volker Quetschke (vq@openoffice.org)
+#i60948# Add -m option family to generate timing information for targets
+and/or recipes.
+
+2005/09/19 Volker Quetschke (vq@openoffice.org)
+#i53148# Fix $(shell ...) macro picking up the output of earlier
+recipe lines in parallel builds.
+#i54766# Ensure that all previous recipe lines to a recipe
+line containing a $(shell ...) macro have finished before executing
+the macro in parallel builds.
+
 2005/06/01 Volker Quetschke (vq@openoffice.org)
 #i39248# Add a testsuite to test some dmake features (only for autotools
- builds). Start the tests with "make check".
+builds). Start the tests with "make check".
 
 2005/04/21 Volker Quetschke (vq@openoffice.org)
 #i47851# Increase the version number to 4.4-cvs and slightly rearrange the
 output of "dmake -V".
-Remove the hardcoded (in autotools builds) OS macro. It had the wrong value
+Remove the hard-coded (in autotools builds) OS macro. It had the wrong value
 to be usable with the startup/*.mk and is not mentioned in the man page.
 Clean up configure.in and friends.
 
