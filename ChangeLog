@@ -1,3 +1,293 @@
+2006-06-16 16:38  vq
+
+	* makefile.mk:
+
+	#i66509# Fix bug in makefile.
+
+2006-06-16 16:24  vq
+
+	* man/: dmake.nc, dmake.tf:
+
+	#i66522# Update manpage.
+
+2006-06-16 14:46  vq
+
+	* tests/: Makefile.am, Makefile.in, misc-11:
+
+	#i65281# Add testcase.
+
+2006-06-16 14:31  vq
+
+	* getinp.c, man/dmake.nc, man/dmake.tf:
+
+	#i65281# Fix comparison with empty string.
+
+2006-06-14 22:42  vq
+
+	* unix/ruletab.c, win95/borland/ruletab.c,
+	  win95/microsft/ruletab.c, winnt/borland/ruletab.c,
+	  winnt/microsft/ruletab.c:
+
+	#i64889# Increase the default MAXLINELENGTH for all "modern" target OSs.
+
+	This patch was submitted by shay@openoffice.org.
+
+2006-06-14 18:43  vq
+
+	* man/dmake.nc, man/dmake.tf, tests/Makefile.am, tests/Makefile.in,
+	  tests/targets-10, tests/targets-7, tests/targets-9:
+
+	#i48087# Add testcases and change man page.
+
+2006-06-13 19:52  vq
+
+	* tests/: Makefile.am, Makefile.in, targets-8:
+
+	#i64331# Add testcase.
+
+2006-06-13 19:31  vq
+
+	* infer.c:
+
+	#i64431# Fix .SETDIR problem with percent targets.
+
+2006-06-13 15:06  vq
+
+	* Makefile.in, configure, configure.in:
+
+	#i64795# Fix typo in configure.in.
+
+2006-06-13 14:33  vq
+
+	* tests/: Makefile.am, Makefile.in, targets-7:
+
+	#i65122# Add testcase.
+
+2006-06-13 13:14  vq
+
+	* tests/: Makefile.am, Makefile.in, targets-6:
+
+	#i66385# Add testcase.
+
+2006-06-13 12:58  vq
+
+	* rulparse.c, man/dmake.nc, man/dmake.tf:
+
+	#i66385# Handle .<suffix> targets regardless of the AUGMAKE (-A) status.
+	Document this and regenerate man page.
+
+2006-06-13 11:03  vq
+
+	* tests/: Makefile.am, Makefile.in, targets-5:
+
+	#i66083# Add testcase.
+
+2006-06-13 01:28  vq
+
+	* rulparse.c:
+
+	#i66083# Check that AUGMAKE meta targets are not mixed with normal targets.
+
+2006-06-03 23:30  vq
+
+	* rulparse.c:
+
+	#i48087# Only warn once about multiple prerequisites for %-targets.
+
+2006-06-03 21:55  vq
+
+	* tests/: Makefile.am, Makefile.in, targets-4:
+
+	#i65360# Add testcase to check for message about empty recipe for
+	special or meta targets.
+
+2006-06-03 21:37  vq
+
+	* rulparse.c:
+
+	#i65360# Improve output of warning for special or meta targets without
+	recipe.
+
+2006-06-03 21:17  vq
+
+	* tests/: Makefile.am, Makefile.in, targets-3:
+
+	#i65360# Add testcase that checks that a warning is issued when .<suffix>
+	targets are ignored.
+
+2006-06-03 20:34  vq
+
+	* tests/: Makefile.am, Makefile.in, targets-1, targets-2:
+
+	#i64869# Add testcases and regenerate autotools files.
+
+2006-05-17 17:44  vq
+
+	* Makefile.in, tests/Makefile.am, tests/Makefile.in,
+	  tests/macros-3:
+
+	#i65333# Add testcase and regenerate autotools files.
+
+2006-05-17 00:04  vq
+
+	* man/dmake.tf:
+
+	#i65333# Elaborate on .<suffix> vs. special targets and .INIT and .DONE
+	that also begin with a dot.
+
+2006-05-15 23:43  vq
+
+	* man/dmake.tf:
+
+	#i65333# Collect .<suffix> description at one place in the man page.
+
+2006-05-15 18:50  vq
+
+	* man/dmake.tf:
+
+	#i48087# Document the current %-target handling.
+
+2006-05-14 13:06  vq
+
+	* rulparse.c:
+
+	#i65360# Fix typo.
+
+2006-05-14 12:58  vq
+
+	* rulparse.c:
+
+	#i65360# Warn if dmake ignores an illegal .<suffix> target but keep the
+	behavior of dmake 4.4 and earlier.
+
+2006-05-12 13:36  vq
+
+	* rulparse.c:
+
+	#i48087# Fix typo.
+
+2006-05-12 12:59  vq
+
+	* rulparse.c:
+
+	#i65333# Prevent .ROOT, .TARGETS, .INIT and .DONE from being treates as
+	special .<suffix> targets.
+
+2006-05-10 23:38  vq
+
+	* Makefile.in, man/dmake.nc, tests/Makefile.in:
+
+	#i65281# Regenerate autotools files and plain text version of manpage.
+
+2006-05-10 23:31  vq
+
+	* getinp.c, man/dmake.tf, tests/Makefile.am, tests/misc-10:
+
+	#i65281# Fix crash on numeric comparison and add testcase.
+
+2006-05-10 13:46  vq
+
+	* dmdump.c, rulparse.c, struct.h:
+
+	#i48087# Correct parsing of target definitions with multiple % targets and
+	prerequisites. Also add some comments.
+
+2006-05-05 17:33  vq
+
+	* dmake.h, infer.c, rulparse.c, struct.h, man/dmake.tf:
+
+	#i65122# Fix problem with "non-documented" handling of multiple %-targets
+	plus several improved comments and a man page correction.
+
+2006-05-03 17:47  vq
+
+	* dag.c, dmake.c, getinp.c, imacs.c, parse.c, rulparse.c,
+	  vextern.h:
+
+	#i64869# Fix various parsing problems of target definitions and
+	add code comments.
+
+2006-03-31 11:04  vq
+
+	* Makefile.in, NEWS, configure, configure.in, readme/intro.txt,
+	  readme/read1st.txt, readme/release.txt, win95/microsft/config.h:
+
+	#i63874# Release dmake 4.4
+	Update version numbers and regenerate autotool files.
+
+2006-03-15 09:43  vq
+
+	* unix/runargv.c:
+
+	#i61940# Add and correct some comments.
+
+2006-03-14 18:23  vq
+
+	* tests/: Makefile.am, Makefile.in, function_macros-5:
+
+	#i61940# Add testcase to check that $(shell ..) does not pick up output from
+	concurrent processes.
+
+2006-03-13 18:21  vq
+
+	* function.c, getinp.c, state.c, unix/arlib.c:
+
+	#i61390# Make dmake (gcc) build -Wall warning free.
+
+2006-03-01 22:46  vq
+
+	* rulparse.c:
+
+	#i61969# Clean F_MADE and F_STAT when recipes or prerequisites are changed
+	so that the target gets rebuild even if it was already build. (As a
+	generated .INCLUDE makefile.)
+
+2006-03-01 22:37  vq
+
+	* tests/: Makefile.am, Makefile.in, misc-9:
+
+	#i61969# Commit testcase for this issue.
+
+2006-02-26 18:33  vq
+
+	* dmake.c:
+
+	#i62118# Fix invalid detection of circular dependencies arising from F_VISITED
+	and F_USED both having the same value but being used in different contexts.
+
+2006-02-26 17:46  vq
+
+	* tests/: Makefile.am, Makefile.in, misc-8:
+
+	#i62118# Add testcase for issue 62118.
+
+2006-02-26 17:23  vq
+
+	* tests/macros-2:
+
+	#i61170# Fix testcase to remove the created "dirwith space" directory.
+
+2006-02-21 18:06  vq
+
+	* unix/runargv.c:
+
+	#i61940# Remove the #undef that unconditionally disabled the use of spawn.
+
+2006-02-11 19:47  vq
+
+	* config.h.in, configure, configure.in, unix/runargv.c:
+
+	#i61940# Enable the alternative use of spawn instead of fork/exec for
+	dmake. Add the configure option --enable-spawn. Regenerate autotool files.
+
+2006-02-06 18:06  vq
+
+	* Makefile.in, man/dmake.tf, tests/Makefile.am, tests/Makefile.in,
+	  tests/misc-7:
+
+	#i61714# Correct manpage to state that the usage of .SETDIR like
+	`.SETDIR=foo : targets` is valid and add a testcase to verify this.
+
 2006-02-04 23:02  vq
 
 	* man/dmake.nc:

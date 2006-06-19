@@ -18,7 +18,7 @@ __.silent !:= $(.SILENT)	# Preserve user's .SILENT flag
 
 # startup.mk configuration parameters, for each, set it to non-null if you wish
 # to enable the named facility.
-__.HAVE_RCS  !:=    		# yes => RCS  is installed.
+__.HAVE_RCS  !:=     		# yes => RCS  is installed.
 __.HAVE_SCCS !:=    		# yes => SCCS is installed.
 __.DEFAULTS  !:= yes		# yes => define default construction rules.
 __.EXECS     !:= yes            # yes => define how to build executables.
