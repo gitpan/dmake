@@ -1,12 +1,12 @@
 diff -ruN dmake.orig/startup/startup.mk dmake/startup/startup.mk
 --- dmake.orig/startup/startup.mk	2006-04-20 13:11:06.000000000 +0100
-+++ dmake/startup/startup.mk	2006-06-19 11:07:13.904081900 +0100
++++ dmake/startup/startup.mk	2006-09-21 08:58:30.039206000 +0100
 @@ -18,7 +18,7 @@
  
  # startup.mk configuration parameters, for each, set it to non-null if you wish
  # to enable the named facility.
 -__.HAVE_RCS  !:= yes 		# yes => RCS  is installed.
-+__.HAVE_RCS  !:=     		# yes => RCS  is installed.
++__.HAVE_RCS  !:=    		# yes => RCS  is installed.
  __.HAVE_SCCS !:=    		# yes => SCCS is installed.
  __.DEFAULTS  !:= yes		# yes => define default construction rules.
  __.EXECS     !:= yes            # yes => define how to build executables.
@@ -20,14 +20,14 @@ diff -ruN dmake.orig/startup/startup.mk dmake/startup/startup.mk
  # Check and enable AUGMAKE extensions for SYSV compatibility
  .IF $(AUGMAKE)
 diff -ruN dmake.orig/win95/microsft/config.h dmake/win95/microsft/config.h
---- dmake.orig/win95/microsft/config.h	2006-06-17 18:08:12.000000000 +0100
-+++ dmake/win95/microsft/config.h	2006-06-19 11:08:10.858664900 +0100
+--- dmake.orig/win95/microsft/config.h	2006-07-23 05:27:59.000000000 +0100
++++ dmake/win95/microsft/config.h	2006-09-21 09:00:37.119770900 +0100
 @@ -38,7 +38,7 @@
  
  /* Name and version number of this package */
  #define PACKAGE "dmake"
--#define VERSION "4.5-cvs"
-+#define VERSION "4.5-20060619-SHAY"
+-#define VERSION "4.6-cvs"
++#define VERSION "4.6-20060921-SHAY"
  #define BUILDINFO "Windows / MS Visual C++"
  
  #if defined (_MSC_VER)
