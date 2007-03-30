@@ -1,4 +1,4 @@
-This is DMAKE version 4.7 compiled for Win32 using MS VC++ 6.
+This is DMAKE version 4.8 compiled for Win32 using MS VC++ 6.
 
 For information on how to use DMAKE, see man\dmake.nc.
 
@@ -31,11 +31,11 @@ You can get the latest "stable" sources from:
     cvs -d :pserver:anoncvs@anoncvs.services.openoffice.org:/cvs co dmake
 
 This version of DMAKE is compiled from sources taken from the
-cws_src680_dmake47 branch of the above cvs address on 20 Nov 2006 at 09:00 AM
+cws_src680_dmake48 branch of the above cvs address on 27 Mar 2007 at 08:00 AM
 (GMT).  You can get the same sources with the cvs command:
 
     cvs -d :pserver:anoncvs@anoncvs.services.openoffice.org:/cvs co
-        -r cws_src680_dmake47 -D "2006-11-20 09:00 GMT" dmake
+        -r cws_src680_dmake48 -D "2007-03-27 08:00 GMT" dmake
 
 The file PATCH.TXT contains the changes that I made to those sources, namely, a
 change to the version string displayed by "dmake -V", plus a couple of other
@@ -48,4 +48,4 @@ Enjoy!
 
 Steve Hay
 shay@cpan.org
-20-Nov-2006
+27-Mar-2007
