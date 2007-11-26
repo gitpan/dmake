@@ -1,4 +1,4 @@
-This is DMAKE version 4.9 compiled for Win32 using MS VC++ 6.
+This is DMAKE version 4.11 compiled for Win32 using MS VC++ 6.
 
 For information on how to use DMAKE, see man\dmake.nc.
 
@@ -30,10 +30,10 @@ You can get the latest "stable" sources from:
 
     cvs -d :pserver:anoncvs@anoncvs.services.openoffice.org:/cvs co dmake
 
-This version of DMAKE is compiled from the stand-alone dmake 4.9 source package
+This version of DMAKE is compiled from the stand-alone dmake 4.11 source package
 found at:
 
-    http://tools.openoffice.org/dmake/dmake_4.9.zip
+    http://tools.openoffice.org/dmake/dmake_4.11.zip
 
 The file PATCH.TXT contains the changes that I made to those sources, namely, a
 change to the version string displayed by "dmake -V", plus a couple of other
@@ -41,6 +41,11 @@ changes inspired by the changes made by Gurusamy Sarathy in his DMAKE 4.1 build
 which is available from:
 
     ftp://ftp.linux.activestate.com/pub/staff/gsar/
+
+Note that there was no version 4.10 in the series of DMAKE releases made
+available by OpenOffice.org (or these binary builds of them released on CPAN) to
+avoid confusion with Sarathy's release mentioned above (which identified itself
+as "Version 4.10, PL 0").
 
 Enjoy!
 

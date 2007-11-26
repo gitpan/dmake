@@ -1,6 +1,6 @@
 diff -ruN dmake.orig/startup/startup.mk dmake/startup/startup.mk
 --- dmake.orig/startup/startup.mk	2006-04-20 09:11:06.000000000 +0100
-+++ dmake/startup/startup.mk	2007-11-26 14:45:43.880967100 +0000
++++ dmake/startup/startup.mk	2007-11-26 14:55:24.999276300 +0000
 @@ -18,7 +18,7 @@
  
  # startup.mk configuration parameters, for each, set it to non-null if you wish
@@ -20,14 +20,14 @@ diff -ruN dmake.orig/startup/startup.mk dmake/startup/startup.mk
  # Check and enable AUGMAKE extensions for SYSV compatibility
  .IF $(AUGMAKE)
 diff -ruN dmake.orig/win95/microsft/config.h dmake/win95/microsft/config.h
---- dmake.orig/win95/microsft/config.h	2007-09-05 00:41:10.000000000 +0100
-+++ dmake/win95/microsft/config.h	2007-11-26 14:43:55.728870300 +0000
+--- dmake.orig/win95/microsft/config.h	2007-10-13 20:43:20.000000000 +0100
++++ dmake/win95/microsft/config.h	2007-11-26 14:55:38.358138300 +0000
 @@ -38,7 +38,7 @@
  
  /* Name and version number of this package */
  #define PACKAGE "dmake"
--#define VERSION "4.9"
-+#define VERSION "4.9-SHAY"
+-#define VERSION "4.11"
++#define VERSION "4.11-SHAY"
  #define BUILDINFO "Windows / MS Visual C++"
  
  #if defined (_MSC_VER)

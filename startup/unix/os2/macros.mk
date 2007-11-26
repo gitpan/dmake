@@ -1,5 +1,8 @@
-# Define additional MSDOS specific settings.
+# Define additional OS/2 specific macros.
 #
+
+# Process release-specific refinements, if any.
+.INCLUDE .NOINFER .IGNORE : $(INCFILENAME:d)$(OSRELEASE)$/macros.mk
 
 # Execution environment configuration.
 # Grab the current setting of COMSPEC.
@@ -7,7 +10,7 @@
 .IMPORT .IGNORE : COMSPEC ROOTDIR
 
 # First check if SHELL is defined to be something other than COMSPEC.
-# If it is, then assume that SHELL is a Korn compatible shell like MKS's
+# If it is assume that SHELL is a Korn compatible shell like MKS's
 .IF $(SHELL) == $(NULL)
    .IF $(COMSPEC) == $(NULL)
       SHELL *:= $(ROOTDIR)$/bin$/sh$E
@@ -17,8 +20,8 @@
 .END
 GROUPSHELL *:= $(SHELL)
 
-# Process release-specific refinements, if any.
-.INCLUDE .NOINFER .IGNORE : $(INCFILENAME:d)$(OSRELEASE)$/macros.mk
+# Directory entries are case incensitive
+.DIRCACHERESPCASE *:= no
 
 # Applicable suffix definitions
 A *:= .lib	# Libraries
@@ -33,43 +36,25 @@ V *:= 		# RCS suffix
 # are going to use.  COMSPEC (assumed to be command.com) or
 # MKS Korn shell.
 .IF $(SHELL) == $(COMSPEC)
-.IF $(COMSPEC:lf) == cmd.exe
-   SHELLFLAGS       *:= $(SWITCHAR)S $(SWITCHAR)c
-   SHELLCMDQUOTE    *:= "
-# " fix syntax highlighting
-.ELIF $(COMSPEC:lf) == command.com
    SHELLFLAGS       *:= $(SWITCHAR)c
-   SHELLCMDQUOTE    *:= "
-# " fix syntax highlighting
-.ELSE
-   SHELLFLAGS       *:= $(SWITCHAR)c
-.END
-   GROUPFLAGS       *:= $(SWITCHAR)c
-   SHELLMETAS       *:= "<>|
-# " fix syntax highlighting
-   GROUPSUFFIX      *:= .cmd
+   GROUPFLAGS       *:= $(SHELLFLAGS)
+   SHELLMETAS       *:= *"?<>
+   GROUPSUFFIX      *:= .bat
+   DIRSEPSTR        *:= \\\
    DIVFILE          *=  $(TMPFILE:s,/,\,)
    RM               *=  del
    RMFLAGS          *=
    MV	            *=  rename
-   __.DIVSEP-sh-yes *:= \\
-   __.DIVSEP-sh-no  *:= \\
 .ELSE
-   SHELL	    !:= $(SHELL:s,/,\,)
-   COMMAND          *=  $(CMNDNAME:s,/,\,) $(CMNDARGS)
    SHELLFLAGS       *:= -c
    GROUPFLAGS       *:= 
-   SHELLMETAS       *:= *";?<>|()&][$$\#`'
+   SHELLMETAS       *:= *"?<>|()&][$$\#`'
    GROUPSUFFIX      *:= .ksh
    .MKSARGS         *:= yes
    RM               *=  $(ROOTDIR)$/bin$/rm
    RMFLAGS          *=  -f
    MV	            *=  $(ROOTDIR)$/bin$/mv
    DIVFILE          *=  $(TMPFILE:s,/,${__.DIVSEP-sh-${USESHELL}},)
-   __.DIVSEP-sh-yes *:= \\\
-   __.DIVSEP-sh-no  *:= \\
+   __.DIVSEP-sh-yes !:= \\\
+   __.DIVSEP-sh-no  !:= \\
 .ENDIF
-
-
-# Does not respect case of filenames.
-.DIRCACHERESPCASE := no
