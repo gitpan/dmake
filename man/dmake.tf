@@ -19,7 +19,7 @@
 .IP "\\$1" \\n[dmake-indent]u
 .it 1 PD
 ..
-.TH DMAKE 1  "2007-01-29" "Dmake Version 4.8-cvs"
+.TH DMAKE 1  "2007-06-25" "Dmake Version 4.9"
 .SH NAME
 \fBdmake\fR \- maintain program groups, or interdependent files
 .SH SYNOPSIS
@@ -714,17 +714,17 @@ Switch between default (POSIX) and Windows style path representation.
 (This attribute is specific for cygwin dmake executables and non-cygwin
 environments ignore this attribute.)
 .sp
-Under Cygwin it can be usefull to generate Windows style paths (with
+Under Cygwin it can be useful to generate Windows style paths (with
 regular slashes) instead of the default cygwin style (POSIX) paths
 for dmake's dynamic macros.
 The affected macros are $@, $*, $>, $?, $<, $&, $^ and $(PWD), $(MAKEDIR)
 and $(TMD). This feature can be used to create DOS style path parameters
 for native W32 programs from dynamic macros.
 .sp
-\fBNote\fP that the windows style paths use regular slashes ('/') instead
-of the usual windows backslash ('\\') as directory separator to avoid quoting
-problems (After all it is still is a cygwin \fBdmake\fP!) and cygwin, as well
-as native windows, programs should have no problems using this (c:/foo/bar)
+\fBNote\fP that the Windows style paths use regular slashes ('/') instead
+of the usual Windows backslash ('\\') as directory separator to avoid quoting
+problems (after all it is still a cygwin \fBdmake\fP!) and cygwin, as well
+as native Windows, programs should have no problems using this (c:/foo/bar)
 path representation.
 .sp
 Example: Assuming the current target to be /tmp/mytarget the $@ macro
@@ -940,6 +940,23 @@ If a token ends in a string composed from the value of the macro DIRBRKSTR
 \fB:d\fP modifier then the expansion returns the directory name less the
 final directory separator string.  Thus successive pairs of :d modifiers
 each remove a level of directory in the token string.
+.PP
+The infered names of targets \fB:i\fP modifier returnes the actual filename
+associated to the target, see BINDING TARGETS. If the value is not a target or
+prerequisite the value is returned unchanged. For the following example:
+.RS
+test = aprog bprog
+.RE
+If aprog and bprog are targets or prerequisits and they are bound
+to /tmp/aprog and bprog (see .SOURCE special target) the macro expansion
+has the following effect:
+.RS
+.sp
+.Is "$(test:s/out/in/:f)   "
+.Ii "$(test:i)"
+\(-> /tmp/aprog bprog
+.RE
+.fi
 .PP
 The map escape codes modifier changes the following escape codes \ea => <bel>,
 \&\eb => <backspace>, \ef => <formfeed>, \en => <nl>, \er => <cr>,
@@ -1756,7 +1773,7 @@ $(TMD)$(DIRSEPSTR) to a relative path.
 This macro is modified when .SETDIR attributes are processed.
 TMD will usually be a relative path with the following two exceptions. If the
 relative path would go up until the root directory or if different drive
-letters (DOS file system) make a relative path impossible the absolut path
+letters (DOS file system) make a relative path impossible the absolute path
 from MAKEDIR is used.
 .IP \fBUSESHELL\fP 1.6i
 The value of this macro is set to "yes" if the current recipe is forced to
@@ -1772,15 +1789,15 @@ If set to "yes" enables the directory cache (this is the default).  If set to
 "no" disables the directory cache (equivalent to -d command-line flag).
 .IP \fB.DIRCACHERESPCASE\fP 1.6i
 If set to "yes" causes the directory cache, if enabled, to respect
-file case, if set to "no" files are cached cache insensitive.
-By default it is set to "no" only Windows as the filesystems on
-this operating systems is case insensitive and set to "yes" for all
+file case, if set to "no" files are cached case insensitive.
+By default it is set to "no" on Windows as the filesystems on
+this operating system are case insensitive and set to "yes" for all
 other operating systems. The default can be overriden, if desired.
 .sp
 \fBNote:\fP Using case insensitive directory caching on case sensitive
 file systems is a \fBBAD\fP idea. If in doubt use case sensitive
 directory caching even on case insensitive file systems as the
-worst case in this szenario is that /foo/bar/ and /foo/BAR/ are
+worst case in this scenario is that /foo/bar/ and /foo/BAR/ are
 cached separately (with the same content) even though they are
 the same directory. This would only happen if different targets
 use different upper/lower case spellings for the same directory
@@ -1864,6 +1881,12 @@ line or in the makefile is equivalent to supplying a corresponding value to
 the -P flag on the command line. If the global .SEQUENTIAL attribute is set
 (or the -S command line switch is used) the value of MAXPROCESS is fixed
 to "1" and cannot be changed.
+.IP \fBOOODMAKEMODE\fP 1.6i
+This macro enables a special compatibility mode needed by the OpenOffice.org
+build system. If set, the switch disables the removal of leading './' path
+elements during target filename normalization (See BINDING TARGETS). If './'
+appear in the pathname, but not at the beginning of it, they are still
+removed by the normalization.
 .IP \fBPREP\fP 1.6i
 This macro defines the number of iterations to be expanded
 automatically when processing % rule definitions of the form:
@@ -1934,7 +1957,7 @@ These macros are defined
 when \fBdmake\fP is making targets, and may take on different values for each
 target.  \fB$@\fP is defined to be the full target name, \fB$?\fP is the
 list of all out of date prerequisites, except for the \fB!\fP ruleop, in
-this case it is set to the currently build
+which case it is set to the current build
 prerequisite instead.  \fB$&\fP is the list of all
 prerequisites, \fB$>\fP is the name of the library if the current target is a
 library member, and
@@ -2388,7 +2411,11 @@ none of their prerequisite files have been modified as a result of the fix.
 .PP
 When \fBdmake\fP constructs target (and prerequisite) pathnames they are
 normalized  to the shortest (or most natural, see below for the cygwin case)
-representation.  Substrings like './' or of the form 'baz/..' are removed.
+representation.  Substrings like './' or of the form 'baz/..' are removed
+and multiple slashes are collapsed to one unless they are at the beginning
+of the pathname. Leading slashes are normalized according to POSIX rules,
+i.e. more than two leading slashes are reduced to one slash and a
+leading '//' is kept as it might have a special meaning. 
 For example "./foo", "bar/../foo" and foo are recognized as the same file.
 This may result in somewhat unexpected values of the macro expansion
 of runtime macros like \fB$@\fP, but is infact the corect result.

@@ -1,3 +1,90 @@
+2007-06-25 18:11  vq
+
+	* Makefile.in, NEWS, configure, configure.in, man/dmake.nc,
+	  man/dmake.tf, readme/read1st.txt, win95/microsft/config.h,
+	  winnt/microsft/config.h:
+
+	#i78508# Release dmake 4.9.
+
+2007-06-22 16:47  vq
+
+	* man/dmake.nc, man/dmake.tf, tests/Makefile.am, tests/Makefile.in,
+	  tests/targets-19:
+
+	#i78061# Add testcase and documentation.
+
+2007-06-22 13:36  vq
+
+	* man/: dmake.nc, dmake.tf:
+
+	#i74007# Add documentation to manpage.
+
+2007-06-21 16:28  vq
+
+	* tests/: Makefile.am, Makefile.in, targets-18:
+
+	#i74007#  Add testcase.
+
+2007-06-20 18:26  vq
+
+	* dag.c, imacs.c, path.c, vextern.h:
+
+	#i74700# Add a new special macro OOODMAKEMODE that is used to toggle
+	OOo build specific behavior. If OOODMAKEMODE is set (i.e. it begins with y)
+	the leading ./ of a path will no longer be removed.
+	This patch also fixes iz78061.
+
+2007-06-20 18:07  vq
+
+	* configure.in:
+
+	#i78152# Make dmake buildable on GNU/kFreeBSD.
+
+2007-06-17 23:56  vq
+
+	* man/: dmake.nc, dmake.tf:
+
+	#i78033# Document :i macro expansion.
+
+2007-04-24 13:42  vq
+
+	* Makefile.in, NEWS, configure, configure.in, man/dmake.nc,
+	  man/dmake.tf, win95/microsft/config.h, winnt/microsft/config.h:
+
+	#i73700# Release dmake 4.8.
+
+2007-04-09 09:22  vq
+
+	* tests/misc-18:
+
+	#i73499# Fix bash syntax typo.
+
+2007-04-08 23:27  vq
+
+	* tests/misc-18:
+
+	#i73499# Make test work on Solaris.
+
+2007-04-08 23:06  vq
+
+	* make.c:
+
+	#i73499# Fix potential problem with m_at getting freed without being
+	initalized first.
+
+2007-03-27 13:21  vq
+
+	* man/: dmake.nc, dmake.tf:
+
+	#i10000# Fix typos in manual.
+	This patch was provided by shay@openoffice.org.
+
+2007-03-24 00:29  vq
+
+	* make.c, man/dmake.nc, man/dmake.tf:
+
+	#i75697# Document the special treatment of $? for the :! ruleop.
+
 2007-03-23 16:40  vq
 
 	* NEWS, man/dmake.nc, man/dmake.tf, tests/Makefile.am,

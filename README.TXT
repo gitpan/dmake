@@ -1,4 +1,4 @@
-This is DMAKE version 4.8 compiled for Win32 using MS VC++ 6.
+This is DMAKE version 4.9 compiled for Win32 using MS VC++ 6.
 
 For information on how to use DMAKE, see man\dmake.nc.
 
@@ -8,8 +8,8 @@ environment variable.  So, to install it, just copy DMAKE.EXE and the startup
 subdirectory to some location on your path.
 
 You can change the default platform in the startup\config.mk file (the defaults,
-despite appearances, are set up for MS VC++ 6 on Windows NT/2000/XP).  If you
-change the defaults, you'll need to make sure the subdirectories you name in
+despite appearances, are set up for MS VC++ 6 on Windows NT/2000/XP etc.).  If
+you change the defaults, you'll need to make sure the subdirectories you name in
 startup\config.mk are populated with setup files (you can use the current
 hierarchy as a model).
 
@@ -30,12 +30,10 @@ You can get the latest "stable" sources from:
 
     cvs -d :pserver:anoncvs@anoncvs.services.openoffice.org:/cvs co dmake
 
-This version of DMAKE is compiled from sources taken from the
-cws_src680_dmake48 branch of the above cvs address on 27 Mar 2007 at 08:00 AM
-(GMT).  You can get the same sources with the cvs command:
+This version of DMAKE is compiled from the stand-alone dmake 4.9 source package
+found at:
 
-    cvs -d :pserver:anoncvs@anoncvs.services.openoffice.org:/cvs co
-        -r cws_src680_dmake48 -D "2007-03-27 08:00 GMT" dmake
+    http://tools.openoffice.org/dmake/dmake_4.9.zip
 
 The file PATCH.TXT contains the changes that I made to those sources, namely, a
 change to the version string displayed by "dmake -V", plus a couple of other
@@ -48,4 +46,4 @@ Enjoy!
 
 Steve Hay
 shay@cpan.org
-27-Mar-2007
+26-Nov-2007
