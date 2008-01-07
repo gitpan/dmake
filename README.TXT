@@ -1,4 +1,5 @@
-This is DMAKE version 4.11 compiled for Win32 using MS VC++ 6.
+This is DMAKE version 4.11 (plus a patch to fix spurious warnings) compiled for
+Win32 using MS VC++ 6.
 
 For information on how to use DMAKE, see man\dmake.nc.
 
@@ -42,6 +43,11 @@ which is available from:
 
     ftp://ftp.linux.activestate.com/pub/staff/gsar/
 
+together with a patch to fix spurious warnings taken from attachment #50678 in
+OpenOffice.org issue #85014, which can be seen at:
+
+    http://www.openoffice.org/issues/show_bug.cgi?id=85014
+
 Note that there was no version 4.10 in the series of DMAKE releases made
 available by OpenOffice.org (or these binary builds of them released on CPAN) to
 avoid confusion with Sarathy's release mentioned above (which identified itself
@@ -51,4 +57,4 @@ Enjoy!
 
 Steve Hay
 shay@cpan.org
-26-Nov-2007
+07-Jan-2008
