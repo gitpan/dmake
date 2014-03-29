@@ -2,6 +2,12 @@
 # ** DO NOT PLACE LOCAL DEFINITIONS INTO THIS FILE IT IS AUTO GENERATED
 # ** USE "startup/local.mk" for those.
 
-   OS            *:= win95
-   OSRELEASE     *:= microsft
-   OSENVIRONMENT *:= vpp40
+   OS            *:= winnt
+   OSRELEASE     *:= mingw
+
+# Comment out the above and uncomment the following instead for a configuration
+# that works for Microsoft Visual C++:
+
+#  OS            *:= win95
+#  OSRELEASE     *:= microsft
+#  OSENVIRONMENT *:= vpp40
